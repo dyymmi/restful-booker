@@ -34,7 +34,7 @@ if(process.env.SEED === 'true'){
  * @apiDescription A simple health check endpoint to confirm whether the API is up and running.
  *
  * @apiExample Ping server:
- * curl -i https://restful-booker.herokuapp.com/ping
+ * curl -i localhost:3001/ping
  * 
  * @apiSuccess {String} OK Default HTTP 201 response
  * 
@@ -58,13 +58,13 @@ router.get('/ping', function(req, res, next) {
  * @apiParam {date}   [checkout]  Return bookings that have a checkout date greater than or equal to the set checkout date. Format must be CCYY-MM-DD
  * 
  * @apiExample Example 1 (All IDs):
- * curl -i https://restful-booker.herokuapp.com/booking
+ * curl -i localhost:3001/booking
  * 
  * @apiExample Example 2 (Filter by name):
- * curl -i https://restful-booker.herokuapp.com/booking?firstname=sally&lastname=brown
+ * curl -i localhost:3001/booking?firstname=sally&lastname=brown
  * 
  * @apiExample Example 3 (Filter by checkin/checkout date):
- * curl -i https://restful-booker.herokuapp.com/booking?checkin=2014-03-13&checkout=2014-05-21
+ * curl -i localhost:3001/booking?checkin=2014-03-13&checkout=2014-05-21
  * 
  * @apiSuccess {object[]} object Array of objects that contain unique booking IDs
  * @apiSuccess {number} object.bookingid ID of a specific booking that matches search criteria
@@ -129,7 +129,7 @@ router.get('/booking', function(req, res, next) {
  * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
  * 
  * @apiExample Example 1 (Get booking):
- * curl -i https://restful-booker.herokuapp.com/booking/1
+ * curl -i localhost:3001/booking/1
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
  * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
@@ -210,7 +210,7 @@ router.get('/booking/:id',function(req, res, next){
  * 
  * @apiExample JSON example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  localhost:3001/booking \
   -H 'Content-Type: application/json' \
   -d '{
     "firstname" : "Jim",
@@ -225,7 +225,7 @@ router.get('/booking/:id',function(req, res, next){
 }'
  * @apiExample XML example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  localhost:3001/booking \
   -H 'Content-Type: text/xml' \
   -d '<booking>
     <firstname>Jim</firstname>
@@ -241,7 +241,7 @@ router.get('/booking/:id',function(req, res, next){
  *
  * @apiExample URLencoded example usage:
  * curl -X POST \
-  https://restful-booker.herokuapp.com/booking \
+  localhost:3001/booking \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
  * 
@@ -341,11 +341,11 @@ router.post('/booking', function(req, res, next) {
  * @apiHeader {string} Content-Type=application/json                    Sets the format of payload you are sending. Can be application/json or text/xml
  * @apiHeader {string} Accept=application/json                          Sets what format the response body is returned in. Can be application/json or application/xml
  * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorization token to access the PUT endpoint, can be used as an alternative to the Authorization
- * @apiHeader {string} [Authorization=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header
+ * @apiHeader {string} [Authorization=YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample JSON example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'Cookie: token=abc123' \
@@ -363,10 +363,10 @@ router.post('/booking', function(req, res, next) {
  *
  * @apiExample XML example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: text/xml' \
   -H 'Accept: application/xml' \
-  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -H 'Authorization: YWRtaW46cGFzc3dvcmQxMjM=' \
   -d '<booking>
     <firstname>James</firstname>
     <lastname>Brown</lastname>
@@ -381,10 +381,10 @@ router.post('/booking', function(req, res, next) {
  *
  * @apiExample URLencoded example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -H 'Accept: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -H 'Authorization: YWRtaW46cGFzc3dvcmQxMjM=' \
   -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
@@ -431,7 +431,7 @@ router.post('/booking', function(req, res, next) {
  * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.put('/booking/:id', function(req, res, next) {
-  if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
+  if(globalLogins[req.cookies.token] || globalLogins[req.headers.authorization]){
     updatedBooking = req.body;
     if(req.headers['content-type'] === 'text/xml') updatedBooking = updatedBooking.booking;
 
@@ -481,11 +481,11 @@ router.put('/booking/:id', function(req, res, next) {
  * @apiHeader {string} Content-Type=application/json                    Sets the format of payload you are sending. Can be application/json or text/xml
  * @apiHeader {string} Accept=application/json                          Sets what format the response body is returned in. Can be application/json or application/xml
  * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorization token to access the PUT endpoint, can be used as an alternative to the Authorization
- * @apiHeader {string} [Authorization=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header
+ * @apiHeader {string} [Authorization=YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample JSON example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'Cookie: token=abc123' \
@@ -496,10 +496,10 @@ router.put('/booking/:id', function(req, res, next) {
  *
  * @apiExample XML example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: text/xml' \
   -H 'Accept: application/xml' \
-  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -H 'Authorization: YWRtaW46cGFzc3dvcmQxMjM=' \
   -d '<booking>
     <firstname>James</firstname>
     <lastname>Brown</lastname>
@@ -507,10 +507,10 @@ router.put('/booking/:id', function(req, res, next) {
  *
  * @apiExample URLencoded example usage:
  * curl -X PUT \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -H 'Accept: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -H 'Authorization: YWRtaW46cGFzc3dvcmQxMjM=' \
   -d 'firstname=Jim&lastname=Brown'
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
@@ -557,7 +557,7 @@ router.put('/booking/:id', function(req, res, next) {
  * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.patch('/booking/:id', function(req, res) {
-  if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
+  if(globalLogins[req.cookies.token] || globalLogins[req.headers.authorization]){
     updatedBooking = req.body;
 
     if(req.headers['content-type'] === 'text/xml') updatedBooking = updatedBooking.booking;
@@ -592,19 +592,19 @@ router.patch('/booking/:id', function(req, res) {
  * @apiParam (Url Parameter) {Number} id  ID for the booking you want to update
  * 
  * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorization token to access the DELETE endpoint, can be used as an alternative to the Authorization
- * @apiHeader {string} [Authorization=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header
+ * @apiHeader {string} [Authorization=YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample Example 1 (Cookie):
  * curl -X DELETE \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Cookie: token=abc123'
  *
  * @apiExample Example 2 (Basic auth):
  * curl -X DELETE \
-  https://restful-booker.herokuapp.com/booking/1 \
+  localhost:3001/booking/1 \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM='
+  -H 'Authorization: YWRtaW46cGFzc3dvcmQxMjM='
  * 
  * @apiSuccess {String} OK Default HTTP 201 response
  * 
@@ -612,7 +612,7 @@ router.patch('/booking/:id', function(req, res) {
  *     HTTP/1.1 201 Created
 */
 router.delete('/booking/:id', function(req, res, next) {
-  if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
+  if(globalLogins[req.cookies.token] || globalLogins[req.headers.authorization]){
     Booking.get(req.params.id, function(err, record){
       if(record){
         Booking.delete(req.params.id, function(err){
@@ -640,8 +640,7 @@ router.delete('/booking/:id', function(req, res, next) {
  * @apiHeader {string} Content-Type=application/json        Sets the format of payload you are sending
  * 
  * @apiExample Example 1:
- * curl -X POST \
-  https://restful-booker.herokuapp.com/auth \
+ * curl -X POST localhost:3001/auth \
   -H 'Content-Type: application/json' \
   -d '{
     "username" : "admin",

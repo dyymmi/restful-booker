@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env SEED=true node ./bin/www",
+    "dev": "cross-env SEED=true NODE_ENV=development nodemon ./bin/www",
     "test": "mocha -R spec tests/spec.js",
     "build_docs": "apidoc -i ./routes/ -o public/apidoc/"
   },
@@ -27,6 +28,7 @@
   "devDependencies": {
     "chai": "^4.3.7",
     "mocha": "^10.1.0",
+    "nodemon": "^3.1.4",
     "supertest": "^6.3.1"
   }
 }
