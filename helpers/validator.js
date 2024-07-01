@@ -1,13 +1,13 @@
-const rules = require('../helpers/validationrules'),
+const rules = require('./validationRules'),
     validate = require('validate.js');
 
 exports.scrubAndValidate = function(payload, callback){
-  if(payload.firstname){
-      payload.firstname = payload.firstname.trim();
+  if(payload.firstName){
+      payload.firstName = payload.firstName.trim();
   }
 
-  if(payload.lastname){
-      payload.lastname = payload.lastname.trim();
+  if(payload.lastName){
+      payload.lastName = payload.lastName.trim();
   }
 
   callback(payload, validate(payload, rules.returnRuleSet()))

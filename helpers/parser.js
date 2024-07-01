@@ -2,12 +2,12 @@ const js2xmlparser = require("js2xmlparser"),
     formurlencoded = require('form-urlencoded').default,
     date = require('date-and-time');
 
-exports.bookingids = function(req, rawBooking){
+exports.bookingIds = function(req, rawBooking){
   const payload = [];
 
   rawBooking.forEach(function(b){
     const tmpBooking = {
-      bookingid: b.bookingid,
+      bookingId: b.bookingId,
     };
 
     payload.push(tmpBooking);
@@ -19,18 +19,18 @@ exports.bookingids = function(req, rawBooking){
 exports.booking = function(accept, rawBooking){
   try {
     const booking = {
-      'firstname': rawBooking.firstname,
-      'lastname': rawBooking.lastname,
-      'totalprice': parseInt(rawBooking.totalprice),
-      'depositpaid': Boolean(rawBooking.depositpaid),
-      'bookingdates': {
-        'checkin': date.format(new Date(rawBooking.bookingdates.checkin), 'YYYY-MM-DD'),
-        'checkout': date.format(new Date(rawBooking.bookingdates.checkout), 'YYYY-MM-DD'),
+      'firstName': rawBooking.firstName,
+      'lastName': rawBooking.lastName,
+      'totalPrice': parseInt(rawBooking.totalPrice),
+      'depositPaid': Boolean(rawBooking.depositPaid),
+      'bookingDates': {
+        'checkIn': date.format(new Date(rawBooking.bookingDates.checkIn), 'YYYY-MM-DD'),
+        'checkOut': date.format(new Date(rawBooking.bookingDates.checkOut), 'YYYY-MM-DD'),
       }
     };
 
-    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
-      booking.additionalneeds = rawBooking.additionalneeds;
+    if(typeof(rawBooking.additionalNeeds) !== 'undefined'){
+      booking.additionalNeeds = rawBooking.additionalNeeds;
     }
 
     switch(accept){
@@ -53,22 +53,22 @@ exports.booking = function(accept, rawBooking){
 exports.bookingWithId = function(req, rawBooking){
   try {
     const booking = {
-      'firstname': rawBooking.firstname,
-      'lastname': rawBooking.lastname,
-      'totalprice': parseInt(rawBooking.totalprice),
-      'depositpaid': Boolean(rawBooking.depositpaid),
-      'bookingdates': {
-        'checkin': date.format(new Date(rawBooking.bookingdates.checkin), 'YYYY-MM-DD'),
-        'checkout': date.format(new Date(rawBooking.bookingdates.checkout), 'YYYY-MM-DD'),
+      'firstName': rawBooking.firstName,
+      'lastName': rawBooking.lastName,
+      'totalPrice': parseInt(rawBooking.totalPrice),
+      'depositPaid': Boolean(rawBooking.depositPaid),
+      'bookingDates': {
+        'checkIn': date.format(new Date(rawBooking.bookingDates.checkIn), 'YYYY-MM-DD'),
+        'checkOut': date.format(new Date(rawBooking.bookingDates.checkOut), 'YYYY-MM-DD'),
       }
     };
 
-    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
-      booking.additionalneeds = rawBooking.additionalneeds;
+    if(typeof(rawBooking.additionalNeeds) !== 'undefined'){
+      booking.additionalNeeds = rawBooking.additionalNeeds;
     }
 
     const payload = {
-      "bookingid": rawBooking.bookingid,
+      "bookingId": rawBooking.bookingId,
       "booking": booking
     };
 

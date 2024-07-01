@@ -14,7 +14,7 @@ exports.getIDs = function(query, callback){
 },
 
 exports.get = function(id, callback){
-  booking.findOne({'bookingid': parseInt(id)}, function(err, booking) {
+  booking.findOne({'bookingId': parseInt(id)}, function(err, booking) {
     if(err){
       callback(err, null)
     } else {
@@ -25,7 +25,7 @@ exports.get = function(id, callback){
 
 exports.create = function(payload, callback){
   counter++;
-  payload.bookingid = counter;
+  payload.bookingId = counter;
 
   booking.insert(payload, function(err, doc) {
     if(err){
@@ -37,7 +37,7 @@ exports.create = function(payload, callback){
 },
 
 exports.update = function(id, updatedBooking, callback){
-  booking.update({'bookingid': parseInt(id)}, { $set: updatedBooking }, {}, function(err){
+  booking.update({'bookingId': parseInt(id)}, { $set: updatedBooking }, {}, function(err){
     if(err){
       callback(err);
     } else {
@@ -47,7 +47,7 @@ exports.update = function(id, updatedBooking, callback){
 },
 
 exports.delete = function(id, callback){
-  booking.remove({'bookingid': parseInt(id)}, function(err){
+  booking.remove({'bookingId': parseInt(id)}, function(err){
     if(err){
       callback(err);
     } else {

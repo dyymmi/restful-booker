@@ -423,7 +423,7 @@ describe('restful-booker - PUT /booking', function () {
         request(server)
           .put('/booking/1')
           .set('Accept', 'application/json')
-          .set('Authorization', 'Basic YWRtaW46cGFzc3dvcmQxMjM=')
+          .set('Authorization', 'YWRtaW46cGFzc3dvcmQxMjM=')
           .send(payload2)
           .expect(200)
           .expect(payload2, done);

@@ -1,11 +1,11 @@
 exports.returnRuleSet = function(){
   const constraints = {
-    firstname: {presence: true},
-    lastname: {presence: true},
-    totalprice: {presence: true},
-    depositpaid: {presence: true},
-    'bookingdates.checkin': {presence: true},
-    'bookingdates.checkout': {presence: true},
+    firstName: {presence: true},
+    lastName: {presence: true},
+    totalPrice: {presence: true},
+    depositPaid: {presence: true},
+    'bookingDates.checkIn': {presence: true},
+    'bookingDates.checkOut': {presence: true},
   };
 
   return constraints

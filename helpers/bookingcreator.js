@@ -32,18 +32,18 @@ exports.createBooking = function(){
   latestDate.setDate(latestDate.getDate() + 3)
 
   const booking = {
-    firstname: randomiseFirstName(),
-    lastname: randomiseLastName(),
-    totalprice: randomiseNumber(100, 1000),
-    depositpaid: randomiseBool(),
-    bookingdates: {
-      checkin: date.format(new Date(checkInDate.setHours(15, 0, 0, 0)), 'YYYY-MM-DD'),
-      checkout: date.format(new Date(randomiseDate(checkInDate, latestDate).setHours(12, 0, 0, 0)), 'YYYY-MM-DD')
+    firstName: randomiseFirstName(),
+    lastName: randomiseLastName(),
+    totalPrice: randomiseNumber(100, 1000),
+    depositPaid: randomiseBool(),
+    bookingDates: {
+      checkIn: date.format(new Date(checkInDate.setHours(15, 0, 0, 0)), 'YYYY-MM-DD'),
+      checkOut: date.format(new Date(randomiseDate(checkInDate, latestDate).setHours(12, 0, 0, 0)), 'YYYY-MM-DD')
     }
   };
 
   if(randomiseBool()){
-    booking.additionalneeds = "Breakfast";
+    booking.additionalNeeds = "Breakfast";
   }
 
   return booking;

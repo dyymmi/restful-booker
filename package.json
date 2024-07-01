@@ -6,7 +6,7 @@
     "start": "cross-env SEED=true node ./bin/www",
     "dev": "cross-env SEED=true NODE_ENV=development nodemon ./bin/www",
     "test": "mocha -R spec tests/spec.js",
-    "build_docs": "apidoc -i ./routes/ -o public/apidoc/"
+    "build_docs": "apidoc -i ./controllers/ -o public/apidoc/"
   },
   "dependencies": {
     "body-parser": "^1.20.1",
