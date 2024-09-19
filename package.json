@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env SEED=true node ./bin/www",
+    "start": "cross-env NODE_ENV=production SEED=true node ./bin/www",
     "dev": "cross-env SEED=true NODE_ENV=development nodemon ./bin/www",
     "test": "mocha -R spec tests/spec.js",
     "build_docs": "apidoc -i ./controllers/ -o public/apidoc/"
